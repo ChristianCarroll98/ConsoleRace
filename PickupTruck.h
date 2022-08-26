@@ -1,14 +1,14 @@
 #pragma once
 #include "Vehicle.h"
-class Sedan :
-    public Vehicle
+class PickupTruck :
+	public Vehicle
 {
 public:
-	Sedan();
+	PickupTruck();// std::mutex* mutex);
 
 	std::string randomEvent();
 	std::string crash();
 	std::string fillGas();
-	std::string stuckInMud();
+	std::string stopForBeer();
 };
 

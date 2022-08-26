@@ -61,7 +61,7 @@ void Vehicle::race(std::mutex* mutex, std::string* leaderName, int* leaderDistan
 	{
 
 		//give a small delay so it looks cooler and gives the other threads a chance to pick up execution.
-		std::this_thread::sleep_for(std::chrono::nanoseconds(500));
+		std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
 
 		mutex->lock();
 		//check if another vehicle won the race
@@ -76,7 +76,7 @@ void Vehicle::race(std::mutex* mutex, std::string* leaderName, int* leaderDistan
 		
 
 		//do a random event 1/50 of the time.
-		if (rand() % 50 == 0) {
+		if (rand() % 50 == 0 && this->getDelay() <= 0) {
 			message = this->randomEvent();
 			mutex->lock();
 			std::cout << message << " Distance: " << this->getDistance() << "/" << *raceDistance << "\n";

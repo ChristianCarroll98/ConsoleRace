@@ -1,6 +1,6 @@
 #include "Sedan.h"
 
-Sedan::Sedan()//std::mutex* mutex):Vehicle(mutex)
+Sedan::Sedan()
 {
 	this->setSpeed(10);
 	this->setVehicleName("Sedan");
@@ -16,21 +16,21 @@ std::string Sedan::randomEvent()
 
 std::string Sedan::crash()
 {
-	this->addDelay(30);
-	this->setSpeed(std::max(4, this->getSpeed() - 1));
-	if (this->getSpeed() > 4) 
+	this->addDelay(40);
+	this->setSpeed(std::max(2, this->getSpeed() - 1));
+	if (this->getSpeed() > 2) 
 		return "Sedan crashes. Loses some speed.";
 	return "Sedan crashes. It's as slow as it's going to get.";
 }
 
 std::string Sedan::fillGas()
 {
-	this->addDelay(20);
+	this->addDelay(15);
 	return "Sedan fills gas.";
 }
 
 std::string Sedan::stuckInMud()
 {
-	this->addDelay(75);
+	this->addDelay(85);
 	return "Sedan gets stuck in some mud.";
 }

@@ -16,7 +16,7 @@ std::string Tank::randomEvent()
 
 std::string Tank::crash()
 {
-	this->addDelay(30);
+	this->addDelay(20);
 	return "Tank crashes. It smashes whatever was in its path.";
 }
 
@@ -28,10 +28,7 @@ std::string Tank::fillGas()
 
 std::string Tank::treadRepair()
 {
-	this->addDelay(50);
-	this->setSpeed(std::max(3, this->getSpeed() - 1));
-	if (this->getSpeed() > 3)
-		return "Tank crew repairs treads. Loses some speed.";
-	return "Tank crew repairs treads. It's as slow as it's going to get.";
+	this->addDelay(45);
+	return "Tank crew repairs treads.";
 }
 

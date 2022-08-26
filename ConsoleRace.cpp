@@ -7,12 +7,13 @@
 #include <thread>
 #include "Sedan.h"
 #include "Tank.h"
+#include "PickupTruck.h"
 
 int main()
 {
     srand(time(NULL));
 
-    int *raceDistance = new int(5000);
+    int *raceDistance = new int(10000);
 
     std::string *leaderName = new std::string("");
     int *leaderDistance = new int(0);
@@ -21,11 +22,13 @@ int main()
 
     Sedan *sedan = new Sedan();
     Tank* tank = new Tank();
+    PickupTruck* pickupTruck = new PickupTruck();
 
     std::cout << "before threads start.\n";
 
     std::thread sedanThread(&Sedan::race, sedan, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
     std::thread tankThread(&Tank::race, tank, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
+    std::thread pickupTruckThread(&PickupTruck::race, pickupTruck, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
 
     std::cout << "after threads start.\n";
 
@@ -34,6 +37,7 @@ int main()
 
     sedanThread.join();
     tankThread.join();
+    pickupTruckThread.join();
 
     std::cout << "after threads join.\n";
 }
