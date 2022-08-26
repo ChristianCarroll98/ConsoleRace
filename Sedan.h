@@ -4,7 +4,7 @@ class Sedan :
     public Vehicle
 {
 public:
-	Sedan();
+	Sedan(std::string vehicleName);
 
 	std::string randomEvent();
 	std::string crash();

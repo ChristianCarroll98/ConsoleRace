@@ -1,9 +1,8 @@
 #include "Tank.h"
 
-Tank::Tank()// std::mutex* mutex) :Vehicle(mutex)
+Tank::Tank(std::string vehicleName) : Vehicle(vehicleName)
 {
 	this->setSpeed(6);
-	this->setVehicleName("Tank");
 }
 
 std::string Tank::randomEvent()
@@ -17,18 +16,18 @@ std::string Tank::randomEvent()
 std::string Tank::crash()
 {
 	this->addDelay(20);
-	return "Tank crashes. It smashes whatever was in its path.";
+	return this->getVehicleName() + " crashes. It smashes whatever was in its path.";
 }
 
 std::string Tank::fillGas()
 {
 	this->addDelay(30);
-	return "Tank fills gas.";
+	return Vehicle::fillGas();
 }
 
 std::string Tank::treadRepair()
 {
-	this->addDelay(45);
-	return "Tank crew repairs treads.";
+	this->addDelay(60);
+	return this->getVehicleName() + " crew repairs treads.";
 }
 

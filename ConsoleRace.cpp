@@ -8,11 +8,15 @@
 #include "Sedan.h"
 #include "Tank.h"
 #include "PickupTruck.h"
+#include "Motorcycle.h"
 
 int main()
 {
     srand(time(NULL));
 
+    //These variables are shared between all of the threads, passed in my reference.
+
+    // The distance the vehicles need to travel to complete the "race"
     int *raceDistance = new int(10000);
 
     std::string *leaderName = new std::string("");
@@ -20,35 +24,40 @@ int main()
 
     std::mutex *mutex = new std::mutex();
 
-    Sedan *sedan = new Sedan();
-    Tank* tank = new Tank();
-    PickupTruck* pickupTruck = new PickupTruck();
+
+    // Create the objects for each vehicle
+
+    Sedan *sedan = new Sedan("Honda Accord");
+    Tank* tank = new Tank("M5 Light Tank");
+    PickupTruck* pickupTruck = new PickupTruck("Ford F150");
+    Motorcycle* motorcycle = new Motorcycle("BMW R1200GS Dual-Sport Motorcycle");
 
     std::cout << "before threads start.\n";
+
+    //Run the threads for each vehicle
 
     std::thread sedanThread(&Sedan::race, sedan, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
     std::thread tankThread(&Tank::race, tank, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
     std::thread pickupTruckThread(&PickupTruck::race, pickupTruck, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
+    std::thread motorcycleThread(&Motorcycle::race, motorcycle, std::ref(mutex), std::ref(leaderName), std::ref(leaderDistance), std::ref(raceDistance));
 
     std::cout << "after threads start.\n";
-
-    //std::cout << "sedan thread id: " << sedanThread.get_id() << ", joinable:" << sedanThread.joinable() << "\n";
-    //std::cout << "tank thread id: " << tankThread.get_id() << ", joinable:" << tankThread.joinable() << "\n";
 
     sedanThread.join();
     tankThread.join();
     pickupTruckThread.join();
+    motorcycleThread.join();
 
     std::cout << "after threads join.\n";
+
+    delete raceDistance;
+    delete leaderName;
+    delete leaderDistance;
+    delete mutex;
+    delete sedan;
+    delete tank;
+    delete pickupTruck;
+    delete motorcycle;
+
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

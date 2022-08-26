@@ -1,9 +1,8 @@
 #include "PickupTruck.h"
 
-PickupTruck::PickupTruck()
+PickupTruck::PickupTruck(std::string vehicleName) : Vehicle(vehicleName)
 {
     this->setSpeed(8);
-    this->setVehicleName("Pickup Truck");
 }
 
 std::string PickupTruck::randomEvent()
@@ -19,18 +18,18 @@ std::string PickupTruck::crash()
     this->addDelay(30);
     this->setSpeed(std::max(5, this->getSpeed() - 1));
     if (this->getSpeed() > 5)
-        return "Pickup Truck crashes. Loses some speed.";
-    return "Pickup Truck crashes. It's as slow as it's going to get.";
+        return this->getVehicleName() + " crashes. Loses some speed.";
+    return this->getVehicleName() + " crashes. It's as slow as it's going to get.";
 }
 
 std::string PickupTruck::fillGas()
 {
     this->addDelay(20);
-    return "Pickup Truck fills gas.";
+    return Vehicle::fillGas();
 }
 
 std::string PickupTruck::stopForBeer()
 {
-    this->addDelay(80);
-    return "Pickup Truck's driver stops for a beer.";
+    this->addDelay(75);
+    return this->getVehicleName() + "'s driver stops for a beer.";
 }

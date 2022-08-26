@@ -4,7 +4,7 @@ class Tank :
 	public Vehicle
 {
 public:
-	Tank();//std::mutex* mutex);
+	Tank(std::string vehicleName);
 
 	std::string randomEvent();
 	std::string crash();

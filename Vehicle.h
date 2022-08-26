@@ -11,7 +11,7 @@ class Vehicle
 {
 public:
 
-	Vehicle();
+	Vehicle(std::string vehicleName);
 	~Vehicle();
 
 	void setSpeed(int newSpeed);
@@ -30,10 +30,14 @@ public:
 	//main function that will be executed by threads
 	void race(std::mutex* mutex, std::string* leaderName, int* leaderDistance, int* raceDistance);
 
+	
 	//virtual functions
+
+	//function to select a random event to occur:
 	virtual std::string randomEvent() = 0;
 
 	//random events shared by all vehicles:
+
 	virtual std::string crash() = 0;
 	virtual std::string fillGas() = 0;
 	

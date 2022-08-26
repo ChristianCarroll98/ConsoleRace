@@ -1,7 +1,8 @@
 #include "Vehicle.h"
 
-Vehicle::Vehicle()
+Vehicle::Vehicle(std::string vehicleName)
 {
+	this->_vehicleName = vehicleName;
 }
 
 Vehicle::~Vehicle()
@@ -36,7 +37,6 @@ int Vehicle::getDelay()
 void Vehicle::move(int moveBy)
 {
 	this->_distance += moveBy;
-	//std::cout << this->getVehicleName() << " moves.\n";
 }
 
 int Vehicle::getDistance()
@@ -54,13 +54,18 @@ std::string Vehicle::getVehicleName()
 	return this->_vehicleName;
 }
 
+std::string Vehicle::fillGas()
+{
+	return this->getVehicleName() + " fills gas.";
+}
+
 void Vehicle::race(std::mutex* mutex, std::string* leaderName, int* leaderDistance, int* raceDistance)
 {
 	std::string message = "";
 	while (true)
 	{
 
-		//give a small delay so it looks cooler and gives the other threads a chance to pick up execution.
+		//give a small delay so it gives the other threads a chance to pick up execution, otherwise it may not give the other threads a chance to run.
 		std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
 
 		mutex->lock();
@@ -73,9 +78,7 @@ void Vehicle::race(std::mutex* mutex, std::string* leaderName, int* leaderDistan
 		}
 		mutex->unlock();
 
-		
-
-		//do a random event 1/50 of the time.
+		// Small chance to have a random event.
 		if (rand() % 50 == 0 && this->getDelay() <= 0) {
 			message = this->randomEvent();
 			mutex->lock();
@@ -89,17 +92,11 @@ void Vehicle::race(std::mutex* mutex, std::string* leaderName, int* leaderDistan
 		}
 		else {
 			
+			this->move(this->getSpeed());
+
 			//critical section
 			mutex->lock();
 
-			//std::cout << "leader name: " << *leaderName << ", leader distance: " << *leaderDistance << "\n";
-
-			this->move(this->getSpeed());
-
-			//std::cout << this->getVehicleName() << "'s Distance: " << this->getDistance() << "/" << *raceDistance << "\n";
-
-			//std::cout << "race step\n";
-			
 			// surpassed the leader
 			if (this->getDistance() > *leaderDistance)
 			{
@@ -123,13 +120,5 @@ void Vehicle::race(std::mutex* mutex, std::string* leaderName, int* leaderDistan
 			mutex->unlock();
 		}
 	}
-	/*int i = 0;
-	while (true) {
-		mutex->lock();
-		std::cout << "test, " << this->getVehicleName() << "\n";
-		mutex->unlock();
-		i++;
-		if (i >= 100) return;
-	}*/
 	return;
 }

@@ -1,9 +1,8 @@
 #include "Sedan.h"
 
-Sedan::Sedan()
+Sedan::Sedan(std::string vehicleName) : Vehicle(vehicleName)
 {
 	this->setSpeed(10);
-	this->setVehicleName("Sedan");
 }
 
 std::string Sedan::randomEvent()
@@ -19,18 +18,18 @@ std::string Sedan::crash()
 	this->addDelay(40);
 	this->setSpeed(std::max(2, this->getSpeed() - 1));
 	if (this->getSpeed() > 2) 
-		return "Sedan crashes. Loses some speed.";
-	return "Sedan crashes. It's as slow as it's going to get.";
+		return this->getVehicleName() + " crashes. Loses some speed.";
+	return this->getVehicleName() + " crashes. It's as slow as it's going to get.";
 }
 
 std::string Sedan::fillGas()
 {
 	this->addDelay(15);
-	return "Sedan fills gas.";
+	return Vehicle::fillGas();
 }
 
 std::string Sedan::stuckInMud()
 {
 	this->addDelay(85);
-	return "Sedan gets stuck in some mud.";
+	return this->getVehicleName() + " gets stuck in some mud.";
 }
