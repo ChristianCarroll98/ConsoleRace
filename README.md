@@ -2,12 +2,13 @@
 A program to showcase some basic C++ development skills, including inheritance, polymorphism, 
 multithreading, and inter-process communication.
 
-This program creates four objects, each of a different class representing a different type of vehicle.
-Then four threads are started on the "race" method from each class. These threads use a mutex lock to
-access the several variables passed into them by reference including a string for which vehicle is
-winning, the winning vehicle's travel distance, and the total distance they must travel. They run
-functions on each object which move the vehicle forward or cause a random event to happen which may
-delay that vehicle from moving for a certain number of cycles.
+This program creates four objects, each of a different subclass of the Vehicle class, each
+representing a different type of vehicle. Then four threads are started on the "race" method
+from each class. These threads use a mutex lock to access the several variables passed
+into them by reference including a string for which vehicle is winning, the winning
+vehicle's travel distance, and the total distance they must travel. They run functions on
+each object which move the vehicle forward or cause a random event to happen which may delay
+that vehicle from moving for a certain number of cycles.
 
 Although this would be counter-productive in a real multithreaded application, I have added a small
 delay in each loop of the race method's while loop. This is to make sure other threads have an
